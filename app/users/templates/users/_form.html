@@ -1,0 +1,65 @@
+
+{% macro user_form(form_name = '', user_name = '',user_email = '',user_password = '',user_address = '',user_website = '',user_creation_date = '',user_is_active = '',user_mobile = '',user_Birthday = '') %}
+
+        <div class="center row">
+            <div class="large-8 columns">
+            <h4> {{ form_name }} Users</h4>
+               <fieldset>
+                <form action="" method="POST" >
+  
+				 
+           <label>Name
+           <small>required</small><input type="text" name="name" value="{{ user_name }}"  required/>
+           </label> <label>Email
+    <small>required</small><input type="email" name="email" value="{{ user_email }}"  required/>
+    </label> 
+           <label>Password
+           <small>required</small><input type="text" name="password" value="{{ user_password }}"  required/>
+           </label> <label>Address
+    <small>required</small><textarea type="text" name="address" rows="20" > {{ user_address }}
+    </textarea>
+    </label> <label>Website
+    <small>required</small><input type="url" name="website" value="{{ user_website }}"  required/>
+    </label> <label>Creation_Date
+    <small>required</small><input type="datetime" name="creation_date" value="{{ user_creation_date }}"  required/>
+    </label> <!-- START STATUS -->
+      <div class="center row">
+        {% if form_name == 'Update' %}
+
+            <div class="small-6 columns">
+            <label>Is_Active</label>
+              {% if user_is_active %}
+                <input type="radio" name="is_active" value="True"  checked/><label>True</label>
+                <input type="radio" name="is_active" value="False"/><label>False</label>
+              {% else %}
+               <input type="radio" name="is_active" value="True"  /><label>True</label>
+               <input type="radio" name="is_active" value="False" checked/><label>False</label>
+
+              {% endif %}
+                </div>
+        <!-- For a new user-->
+        {% else %}
+
+           <div class="small-6 columns">
+             <label>Is_Active</label>
+               <input type="radio" name="is_active" value="True"  checked/><label>True</label>
+               <input type="radio" name="is_active" value="False"/><label>False</label>
+                 </div>
+       {% endif %}
+   </div>
+           <!-- End STATUS --><label>Mobile
+    <small>required</small><input type="number" name="mobile" value="{{ user_mobile }}"  required/>
+    </label> <label>Birthday
+    <small>required</small><input type="date" name="Birthday" value="{{ user_Birthday }}"  required/>
+    </label> 
+
+				   <button class="button "  type="submit">{{ form_name }}</button>
+                  </form>
+                </fieldset>
+
+
+				</div>
+			  </div>
+
+
+{% endmacro %}

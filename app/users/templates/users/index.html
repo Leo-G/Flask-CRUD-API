@@ -1,0 +1,25 @@
+
+{% extends "layout.html" %}
+  {% block body %}
+
+<div class="center row">
+      <div class="small-12 columns"><p><h4 style="display:inline">Users </h4><a href="{{ url_for('users.user_add')}}">Add new</a></p></div>
+    </div>
+
+      <!-- Main Page Content-->
+ <div class="center row">
+             <div class="small-12 columns">
+            <table> <thead><tr> <th>name</th>  <th>email</th>  <th>password</th>  <th>address</th>  <th>website</th>  <th>creation_date</th>  <th>is_active</th>  <th>mobile</th>  <th>Birthday</th> </tr></thead>
+             <tbody>
+             {% for result in results %}
+              <tr><td>{{ result['name'] }}</td><td>{{ result['email'] }}</td><td>{{ result['password'] }}</td><td>{{ result['address'] }}</td><td>{{ result['website'] }}</td><td>{{ result['creation_date'] }}</td><td>{{ result['is_active'] }}</td><td>{{ result['mobile'] }}</td><td>{{ result['Birthday'] }}</td>
+                 <td><a href="{{ url_for('users.user_update', id=result['id']) }}">Edit</a>        <a href="{{ url_for('users.user_delete', id=result['id']) }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+{% endblock %}

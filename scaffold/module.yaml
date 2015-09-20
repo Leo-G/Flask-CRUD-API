@@ -1,24 +1,12 @@
-customers:
+users:
  - name:String
- - address:Text
- - is_active:Boolean
- - mobile:Integer
  - email:Email
- - url:URL
- - timestamp:DateTime
- - date:Date
- - pricing:Decimal
-
-orders:
- - name:String
+ - password:String
  - address:Text
+ - website:URL
+ - creation_date:DateTime
  - is_active:Boolean
  - mobile:Integer
+ - Birthday:Date
 
-posts:
-  - name:String
-  - address:Text
-  - is_active:Boolean
-  - mobile:Integer
-  - comment:String
-  - timestamp:DateTime
+

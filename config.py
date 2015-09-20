@@ -1,7 +1,7 @@
 # DATABASE SETTINGS
 pg_db_username = 'postgres'
 pg_db_password = ''
-pg_db_name = 'fscafold'
+pg_db_name = 'crud_api'
 pg_db_hostname = 'localhost'
 
 # MYSQL
