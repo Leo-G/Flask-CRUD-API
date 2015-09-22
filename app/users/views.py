@@ -1,7 +1,9 @@
 # resource, resources, Resources
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, make_response
 from app.users.models import Users, UsersSchema
 from flask_restful import Resource, Api
+from app.basemodels import db
+from sqlalchemy.exc import SQLAlchemyError
 
 users = Blueprint('users', __name__, template_folder='templates')
 # http://marshmallow.readthedocs.org/en/latest/quickstart.html#declaring-schemas
@@ -24,12 +26,15 @@ class UsersList(Resource):
         form_errors = schema.validate(user_dict)
         if not form_errors:
             user = Users(user_dict['name'],user_dict['email'],user_dict['address'],user_dict['website'],user_dict['is_active'],user_dict['mobile'],user_dict['Birthday'])
-            add = Users.add(user)
-            # if does not return any error
-            if not add :
-                return jsonify({"message":"success"})
-            else:
-                return jsonify({"message":add})
+            try:
+                user.add(user)
+                return jsonify({"message":"success"})            
+            except SQLAlchemyError as e:
+                db.session.rollback()
+                reponse = make_response({"error":str(e)}, 401)              
+                return reponse
+                
+           
         else:
             return {"errors":form_errors}
 
@@ -71,65 +76,3 @@ class UsersUpdate(Resource):
 		
 api.add_resource(UsersList, '/')
 api.add_resource(UsersUpdate, '/<int:id>')					
-
-
-
-
-""""@users.route('/')
-def user_index():
-   
-
-
-@users.route('/add', methods=['POST', 'GET'])
-def user_add():
-    if request.method == 'POST':
-        # Validate form values by de-serializing the request,
-        # http://marshmallow.readthedocs.org/en/latest/quickstart.html#validation
-        form_errors = schema.validate(request.form.to_dict())
-        if not form_errors:
-            user = Users(
-                request.form['name'],
-                request.form['email'],
-                request.form['password'],
-                request.form['address'],
-                request.form['website'],
-                request.form['creation_date'],
-                request.form['is_active'],
-                request.form['mobile'],
-                request.form['Birthday'],)
-            return add(user, success_url='users.user_index', fail_url='users.user_add')
-        else:
-            flash(form_errors)
-
-    return render_template('/users/add.html')
-
-
-@users.route('/update/<int:id>', methods=['POST', 'GET'])
-def user_update(id):
-    # Get user by primary key:
-    user = Users.query.get_or_404(id)
-    if request.method == 'POST':
-        form_errors = schema.validate(request.form.to_dict())
-        if not form_errors:
-
-            user.name = request.form['name']
-            user.email = request.form['email']
-            user.password = request.form['password']
-            user.address = request.form['address']
-            user.website = request.form['website']
-            user.creation_date = request.form['creation_date']
-            user.is_active = request.form['is_active']
-            user.mobile = request.form['mobile']
-            user.Birthday = request.form['Birthday']
-            return update(user, id, success_url='users.user_index', fail_url='users.user_update')
-        else:
-            flash(form_errors)
-
-    return render_template('/users/update.html', user=user)
-
-
-@users.route('/delete/<int:id>', methods=['POST', 'GET'])
-def user_delete(id):
-    user = Users.query.get_or_404(id)
-    return delete(user, fail_url='users.user_index')
-"""

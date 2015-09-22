@@ -8,7 +8,7 @@ class CRUD():
 
     def session_commit(self):
         try:
-            db.session.commit()
+           db.session.commit() 
         except SQLAlchemyError as e:
             db.session.rollback()
             reason = str(e)
@@ -16,7 +16,8 @@ class CRUD():
 
     def add(self, resource):
         db.session.add(resource)
-        return self.session_commit()
+        #return self.session_commit()
+        return db.session.commit()
 
     def read(self):
         return self.query.all()
