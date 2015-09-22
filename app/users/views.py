@@ -1,7 +1,6 @@
 # resource, resources, Resources
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, request, jsonify
 from app.users.models import Users, UsersSchema
-from app.baseviews import add, update, delete
 from flask_restful import Resource, Api
 
 users = Blueprint('users', __name__, template_folder='templates')
@@ -25,7 +24,7 @@ class UsersList(Resource):
         form_errors = schema.validate(user_dict)
         if not form_errors:
             user = Users(user_dict['name'],user_dict['email'],user_dict['address'],user_dict['website'],user_dict['is_active'],user_dict['mobile'],user_dict['Birthday'])
-            add = user.add(user)
+            add = Users.add(user)
             # if does not return any error
             if not add :
                 return jsonify({"message":"success"})
@@ -38,7 +37,7 @@ class UsersUpdate(Resource):
 
     def get(self, id):
         query =  Users.query.get(id)
-        user = new_schema.dump(query).user_dict
+        user = schema.dump(query).data
         return jsonify({"user":user})
 
 
@@ -71,7 +70,7 @@ class UsersUpdate(Resource):
             return jsonify({"message":delete})
 		
 api.add_resource(UsersList, '/')
-api.add_resource(UsersUpdate, '/update')					
+api.add_resource(UsersUpdate, '/<int:id>')					
 
 
 

@@ -15,13 +15,12 @@ class Users(db.Model, CRUD):
     mobile = db.Column(db.Integer, nullable=False)
     Birthday = db.Column(db.Date, nullable=False)
 
-    def __init__(self,  name,  email, address,  website,  creation_date,  is_active,  mobile,  Birthday, ):
+    def __init__(self,  name,  email, address,  website, is_active,  mobile,  Birthday, ):
 
         self.name = name
         self.email = email
         self.address = address
         self.website = website
-        self.creation_date = creation_date
         self.is_active = is_active
         self.mobile = mobile
         self.Birthday = Birthday
