@@ -17,7 +17,7 @@ class CRUD():
     def add(self, resource):
         db.session.add(resource)
         #return self.session_commit()
-        return db.session.commit()
+        db.session.commit()
 
     def read(self):
         return self.query.all()
