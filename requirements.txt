@@ -12,7 +12,8 @@ itsdangerous==0.24
 Jinja2==2.7.3
 Mako==1.0.1
 MarkupSafe==0.23
-marshmallow==1.2.6
+marshmallow==2.0.0rc2
+marshmallow-jsonapi==0.2.1
 pep8==1.6.2
 psycopg2==2.6
 py==1.4.30

@@ -1,4 +1,5 @@
-from marshmallow import Schema, fields, validate
+#from marshmallow import Schema, fields, validate
+from marshmallow_jsonapi import Schema, fields
 from app.basemodels import db, CRUD
 
 
@@ -28,8 +29,8 @@ class Users(db.Model, CRUD):
 
 class UsersSchema(Schema):
 
-    not_blank = validate.Length(min=1, error='Field cannot be blank')
-
+    #not_blank = validate.Length(min=1, error='Field cannot be blank')
+    id = fields.Str(dump_only=True)
     name = fields.String()
     email = fields.Email()
     address = fields.String()
@@ -40,5 +41,5 @@ class UsersSchema(Schema):
     Birthday = fields.Date()
 
     class Meta:
-        fields = ('id',  'name',  'email',  'address',
-                  'website',  'creation_date',  'is_active',  'mobile',  'Birthday', )
+        type_ = 'users'
+        #fields = ('id',  'name',  'email',  'address',  'website',  'creation_date',  'is_active',  'mobile',  'Birthday', )
