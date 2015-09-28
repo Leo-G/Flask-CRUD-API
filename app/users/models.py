@@ -39,6 +39,14 @@ class UsersSchema(Schema):
     is_active = fields.Boolean()
     mobile = fields.Integer()
     Birthday = fields.Date()
+    
+    #self links
+    def get_top_level_links(self, data, many):
+        if many:
+            self_link = "/users/"
+        else:
+            self_link = "/users/{}".format(data['id'])
+        return {'self': self_link}
 
     class Meta:
         type_ = 'users'
